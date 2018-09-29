@@ -8,47 +8,70 @@ import DataTable from './DataTable/DataTable'
 import FilterTable from './DataTable/FilterTable'
 
 let supplierNameFilter = {};
+let sellerNameFilter = {};
 
 class App extends Component {
   state = {
-    tableData:[],
-    responseData:[],
-    supplierData:null
+    tableData: [],
+    responseData: [],
+    supplierData: {},
+    sellerData: {}
   }
-  componentDidMount(){
-            axios.get('https://muapi2.starsellersworld.com/itemApi/getSuppliers')
-                    .then(res => {
-                        this.setState({responseData : res.data.data})
-    
-                        
-                        //Mapping the supplier details to the filter select box
-                            if(this.state.responseData != null){
-                            this.state.responseData.map(sup => {
-                                return(
-                                supplierNameFilter[sup.SupplierID] = sup.SupplierName
-                                )
-                        })
+  componentDidMount() {
+    //Get suppliers data
+
+    axios.get('https://muapi2.starsellersworld.com/itemApi/getSuppliers')
+      .then(res => {
+        this.setState({ responseData: res.data.data })
+
+
+        //Mapping the supplier details to the filter select box
+        if (this.state.responseData != null) {
+          this.state.responseData.map(sup => {
+            return (
+              supplierNameFilter[sup.SupplierID] = sup.SupplierName
+            )
+          })
+
+          this.setState({
+            supplierData: supplierNameFilter
+          })
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      });
+
+
+    axios.get('https://muapi2.starsellersworld.com/itemApi/getSellers')
+      .then(res => {
+        this.setState({ responseData: res.data.data })
+
+
+        //Mapping the supplier details to the filter select box
         
-                        console.log("qualityType :"+supplierNameFilter)
-                            this.setState({
-                            supplierData : supplierNameFilter
-                            })
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    });
-          }
+          res.data.data.map(sup => {
+            return (
+              sellerNameFilter[sup.SellerID] = sup.SellerName
+            )
+          })
+
+          this.setState({
+            sellerData: sellerNameFilter
+          })
+        
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  }
 
 
   render() {
-
-    
-    console.log("App Data :"+this.state.supplierData)
-
     return (
       <div className="App">
-          <FilterTable data={this.state.responseData} supplierData={this.state.supplierData} tableData={this.state.tableData}/>
+        <FilterTable data={this.state.responseData} supplierData={this.state.supplierData}
+                          sellerData={this.state.sellerData} tableData={this.state.tableData} />
       </div>
     );
   }

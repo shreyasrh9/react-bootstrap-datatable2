@@ -4,6 +4,7 @@ import filterFactory, { textFilter, selectFilter, Comparator } from 'react-boots
 import { productsGenerator } from '../common'
 import axios from 'axios'
 
+let supplierId = null;
 
 class Container extends React.Component {
     constructor(props) {
@@ -16,58 +17,81 @@ class Container extends React.Component {
     handleTableChange = (type, { filters }) => {
         const result = this.props.data.filter((row) => {
             let valid = true;
-            for (const dataField in filters) {
-                
-                const { filterVal, filterType, comparator } = filters[dataField];
-                console.log(filterVal)
-                if (filterType === 'SELECT') {
-                    if (comparator === Comparator.LIKE) {
-                        valid = row[dataField].toString().indexOf(filterVal) > -1;
-                    } else {
-                        valid = row[dataField] === filterVal;
-                    }
-                }
-                if (!valid) break;
+            let rest = []
+            if (supplierId == null) {
+                supplierId = filters.Supplier.filterVal
+                axios.get('https://muapi2.starsellersworld.com/itemApi/supplierItems?MainUser=6656232&SupplierID=' + supplierId)
+                    .then(res => {
+                        console.log(res.data.data)
+                        this.setState({data: res.data.data});
+                    });
             }
-            return valid;
+
+
+
+
+
+            return rest;
         });
-        this.setState(() => ({
-            data: result
-        }));
+
+        // console.log("Result :"+result)
+
+        // this.setState(() => ({
+        //     data: result
+        // }));
 
     }
 
     render() {
-        console.log("Props Data :" + this.props.data)
         let products = productsGenerator();
-        products = this.props.tableData
+        products = this.state.data
         // if (this.props.data != null) {
         //     products = this.props.data
         // }
-        
+
         let supplierNameFilter = {};
 
         let selectOptions = {
-            
+
+        };
+
+        let sellerOptions = {
+
         };
 
         if (this.props.supplierData != null) {
             selectOptions = this.props.supplierData
         }
 
+        if (this.props.sellerData != null) {
+            sellerOptions = this.props.sellerData
+        }
+
         const columns = [{
-            dataField: 'id',
-            text: 'Product ID',
+            dataField: 'sswItemNumber',
+            text: 'sswItemNumber',
         }, {
-            dataField: 'SupplierName',
-            text: 'Product Name',
+            dataField: 'Supplier',
+            text: 'Supplier',
+            formatter: cell => selectOptions[cell],
             filter: selectFilter({
-                options: selectOptions
+                options: selectOptions,
+                defaultValue: 6656241
             })
         }, {
-            dataField: 'SupplierID',
-            text: 'Product Price',
-            filter: textFilter()
+            dataField: 'SKU',
+            text: 'SKU',
+        }, {
+            dataField: 'itemName',
+            text: 'itemName',
+        }, {
+            dataField: 'Seller',
+            text: 'Seller',
+            formatter: cell => sellerOptions[cell],
+            filter: selectFilter({
+                options: sellerOptions,
+                defaultValue: 545
+            })
         }];
 
 
