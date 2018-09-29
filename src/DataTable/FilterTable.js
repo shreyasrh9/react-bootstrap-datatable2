@@ -5,7 +5,9 @@ import { productsGenerator } from '../common'
 import axios from 'axios'
 
 let supplierId = null;
+let currentSupplierId = null;
 let sellerId = null;
+let currentSellerId = null;
 let selectOptions = {};
 let rest = {}
 let sellerOptions = {};
@@ -46,24 +48,39 @@ class Container extends React.Component {
                 for (let i = 0; i < rest.length; i++) {
                     rest[i]['Supplier'] = selectOptions[supplierId]
                 }
-                this.setState({ data: rest });
+                this.setState({ data: rest
+                 });
                 supplierId = null;
 
             });
     }
 
+    fetchDataFromSellerId = (url,sellId) =>{
+        return axios.get(url)
+        .then(res => {
+            rest = res.data.data;
+
+            for (let i = 0; i < rest.length; i++) {
+                rest[i]['Seller'] = sellerOptions[sellId]
+                rest[i]['Supplier'] = selectOptions[rest[i].stockOwner]
+            }
+
+            this.setState({
+                data: rest
+            });
+
+            
+            sellerId = null;    
+
+        });
+    }
 
     handleTableChange = (type, { filters }) => {
-        const result = this.props.data.filter((row) => {
-
-
-            if (filters.Supplier !== undefined) {
-                if (supplierId == null) {
+        if (filters.Supplier !== undefined) {
+                if (supplierId === null) {
                     supplierId = filters.Supplier.filterVal
                     this.fetchDataFromSupplierId(supplierId);
-
-                    const test = "Test"
-
+                    
                     this.setState({
                         columns: [{
                             dataField: 'Supplier',
@@ -123,13 +140,13 @@ class Container extends React.Component {
                             text: 'User Image',
                         }]
                     })
-
+                    currentSupplierId = supplierId;
                     supplierId = null;
                 }
             }
 
             if (filters.Seller !== undefined) {
-                if (sellerId == null) {
+                if (sellerId === null) {
                     sellerId = filters.Seller.filterVal;
 
                     let sellerUserIdent = 0;
@@ -150,25 +167,10 @@ class Container extends React.Component {
                     setTimeout(() => {
                         let url = 'https://muapi2.starsellersworld.com/itemApi/getAllSellingBySeller?MainUser=6656232&SellerID=' + sellerId + '&SellerUserIdent=' + sellerUserIdent
                         console.log("URL :"+url)
-                        axios.get(url)
-                            .then(res => {
-                                rest = res.data.data;
-
-                                for (let i = 0; i < rest.length; i++) {
-                                    rest[i]['Seller'] = sellerOptions[sellerId]
-                                    rest[i]['Supplier'] = selectOptions[rest[i].stockOwner]
-                                }
-
-                                this.setState({
-                                    data: rest
-                                });
-                                sellerId = null;
-
-                            });
-
-
+                        
+                        this.fetchDataFromSellerId(url,sellerId)
                             
-
+                            
                             this.setState({
                                 columns: [{
                                     dataField: 'Supplier',
@@ -203,9 +205,6 @@ class Container extends React.Component {
                                     dataField: 'realInventory',
                                     text: 'Real Inventory',
                                 }, {
-                                    dataField: 'showInventory',
-                                    text: 'Show Inventory',
-                                }, {
                                     dataField: 'sellingPrice',
                                     text: 'Selling Price',
                                 }, {
@@ -221,15 +220,16 @@ class Container extends React.Component {
                                     dataField: 'UserImage',
                                     text: 'User Image',
                                 }]
-                            })
+                            });
+                            sellerId = null;
                     }
                         , 2000);
+
 
                 }
             }
 
-            return rest;
-        });
+        
     }
 
     componentWillReceiveProps(nextProps) {
@@ -255,9 +255,6 @@ class Container extends React.Component {
 
     render() {
         let products = {};
-
-
-
         products = this.state.data
 
         if (this.props.supplierData != null) {
@@ -268,8 +265,10 @@ class Container extends React.Component {
             sellerOptions = this.props.sellerData
         }
 
+        console.log("SupplierId :"+supplierId);
+        console.log("SellerId :"+sellerId);
 
-
+        
         return (
             <BootstrapTable
                 remote={{ filter: true }}
