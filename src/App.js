@@ -13,7 +13,7 @@ let sellerNameFilter = {};
 class App extends Component {
   state = {
     tableData: [],
-    responseData: [],
+    responseData: {},
     supplierData: {},
     sellerData: {}
   }

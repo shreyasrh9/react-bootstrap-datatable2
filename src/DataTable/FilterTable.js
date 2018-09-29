@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter, selectFilter, Comparator } from 'react-bootstrap-table2-filter';
+import './FilterTable.css'
 
 import axios from 'axios'
 
@@ -385,6 +386,7 @@ class Container extends React.Component {
 
 
         return (
+            <div className = 'FilterTable'>
             <BootstrapTable
                 remote={{ filter: true }}
                 noDataIndication="Please select the distributor or seller"
@@ -399,6 +401,7 @@ class Container extends React.Component {
                 condensed
                 bordered={false}
             />
+            </div>
         );
     }
 }
