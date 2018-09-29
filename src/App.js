@@ -77,6 +77,7 @@ class App extends Component {
 
 
   render() {
+
     return (
       <div className="App">
         <FilterTable data={this.state.responseData} supplierData={this.state.supplierData}
