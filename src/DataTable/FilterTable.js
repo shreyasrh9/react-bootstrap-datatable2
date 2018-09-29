@@ -5,6 +5,12 @@ import { productsGenerator } from '../common'
 import axios from 'axios'
 
 let supplierId = null;
+let sellerId = null;
+let selectOptions = {};
+let rest = {}
+let selRest = {};
+let sellerOptions = {};
+
 
 class Container extends React.Component {
     constructor(props) {
@@ -14,50 +20,89 @@ class Container extends React.Component {
         };
     }
 
+    fetchDataFromSupplierId = (supplierId) => {
+        return axios.get('https://muapi2.starsellersworld.com/itemApi/supplierItems?MainUser=6656232&SupplierID=' + supplierId)
+        .then(res => {
+            rest = res.data.data;
+
+            
+            for (let i = 0; i < rest.length; i++) {
+                rest[i]['Supplier'] = selectOptions[supplierId]
+            }
+            this.setState({ data: rest });
+            supplierId = null;
+
+        });
+    }
+    
+
     handleTableChange = (type, { filters }) => {
         const result = this.props.data.filter((row) => {
-            let valid = true;
-            let rest = []
-            if (supplierId == null) {
-                supplierId = filters.Supplier.filterVal
-                axios.get('https://muapi2.starsellersworld.com/itemApi/supplierItems?MainUser=6656232&SupplierID=' + supplierId)
-                    .then(res => {
-                        console.log(res.data.data)
-                        this.setState({data: res.data.data});
-                    });
+
+            
+            if (filters.Supplier !== undefined) {
+                if (supplierId == null) {
+                    supplierId = filters.Supplier.filterVal
+                    this.fetchDataFromSupplierId(supplierId);
+
+                }
             }
 
+            if (filters.Seller !== undefined) {
+                if (sellerId == null) {
+                    sellerId = filters.Seller.filterVal;
+
+                    let sellerUserIdent = 0;
 
 
 
+                    axios.get('https://muapi2.starsellersworld.com/itemApi/getSellers')
+                        .then(res => {
+                            rest = res.data.data;
+
+                            for (let i = 0; i < rest.length; i++) {
+                                if (rest[i].SellerID == sellerId) {
+                                    sellerUserIdent = rest[i].SellerUserIdent;
+                                }
+                            }
+                            
+                        });
+                setTimeout(() => {
+                    let url = 'https://muapi2.starsellersworld.com/itemApi/getAllSellingBySeller?MainUser=6656232&SellerID='+sellerId+'&SellerUserIdent='+ sellerUserIdent
+                    
+                    axios.get(url)
+                        .then(res => {
+                            selRest = res.data.data;
+
+                            for (let i = 0; i < rest.length; i++) {
+                                selRest[i]['Seller'] = sellerOptions[sellerId]
+                            }
+                            
+                            this.setState({
+                                 data: selRest 
+                                });
+                            supplierId = null;
+
+                        });
+                    }
+                ,2000);
+
+                }
+            }
 
             return rest;
         });
-
-        // console.log("Result :"+result)
-
-        // this.setState(() => ({
-        //     data: result
-        // }));
-
     }
+
+
+
 
     render() {
         let products = productsGenerator();
+
+
+
         products = this.state.data
-        // if (this.props.data != null) {
-        //     products = this.props.data
-        // }
-
-        let supplierNameFilter = {};
-
-        let selectOptions = {
-
-        };
-
-        let sellerOptions = {
-
-        };
 
         if (this.props.supplierData != null) {
             selectOptions = this.props.supplierData
@@ -70,6 +115,18 @@ class Container extends React.Component {
         const columns = [{
             dataField: 'sswItemNumber',
             text: 'sswItemNumber',
+        }, {
+            dataField: 'EAN',
+            text: 'EAN',
+        }, {
+            dataField: 'availability',
+            text: 'availability',
+        }, {
+            dataField: 'basicNettoPrice',
+            text: 'basicNettoPrice',
+        }, {
+            dataField: 'itemCondition',
+            text: 'itemCondition',
         }, {
             dataField: 'Supplier',
             text: 'Supplier',

@@ -22,7 +22,16 @@ class App extends Component {
 
     axios.get('https://muapi2.starsellersworld.com/itemApi/getSuppliers')
       .then(res => {
-        this.setState({ responseData: res.data.data })
+
+        let rest = {};
+
+        rest = res.data.data;
+
+        for(let i=0;i<rest.length;i++){
+          rest[i]['Supplier'] = "Test"
+      }
+
+        this.setState({ responseData: rest })
 
 
         //Mapping the supplier details to the filter select box
