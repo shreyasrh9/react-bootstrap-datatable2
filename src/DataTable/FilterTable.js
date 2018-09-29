@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter, selectFilter, Comparator } from 'react-bootstrap-table2-filter';
-import { productsGenerator } from '../common'
+
 import axios from 'axios'
 
 let supplierId = null;
@@ -11,7 +12,11 @@ let currentSellerId = null;
 let selectOptions = {};
 let rest = {}
 let sellerOptions = {};
-
+let currentIndex = 0;
+let sizePerPage = 10;
+let page = 1;
+let totalSize = 0;
+let products = {};
 
 
 
@@ -48,34 +53,40 @@ class Container extends React.Component {
                 for (let i = 0; i < rest.length; i++) {
                     rest[i]['Supplier'] = selectOptions[supplierId]
                 }
-                this.setState({ data: rest
-                 });
+
+                products = rest;
+                this.setState({
+                    data: products.slice(currentIndex, currentIndex + sizePerPage),
+                    fullData: rest
+                });
                 supplierId = null;
 
             });
     }
 
-    fetchDataFromSellerId = (url,sellId) =>{
+    fetchDataFromSellerId = (url, sellId) => {
         return axios.get(url)
-        .then(res => {
-            rest = res.data.data;
+            .then(res => {
+                rest = res.data.data;
 
-            for (let i = 0; i < rest.length; i++) {
-                rest[i]['Seller'] = sellerOptions[sellId]
-                rest[i]['Supplier'] = selectOptions[rest[i].stockOwner]
-            }
+                for (let i = 0; i < rest.length; i++) {
+                    rest[i]['Seller'] = sellerOptions[sellId]
+                    rest[i]['Supplier'] = selectOptions[rest[i].stockOwner]
+                }
 
-            this.setState({
-                data: rest
+                products = rest;
+                this.setState({
+                    data: products.slice(currentIndex, currentIndex + sizePerPage),
+                    fullData: rest
+                });
+
+
+                sellerId = null;
+
             });
-
-            
-            sellerId = null;    
-
-        });
     }
 
-    handleTableChange = (type, { filters }) => {
+    handleTableChange = (type, { filters, page, sizePerPage }) => {
 
         if (filters.Supplier !== undefined && filters.Seller !== undefined) {
             if (supplierId == null & sellerId == null) {
@@ -100,7 +111,7 @@ class Container extends React.Component {
 
                     });
                 setTimeout(() => {
-                    let url = 'https://muapi2.starsellersworld.com/itemApi/getAllSellingBySeller?MainUser=6656232&SellerID=' + sellerId + '&SellerUserIdent=' + sellerUserIdent+'&SupplierID='+supplierId
+                    let url = 'https://muapi2.starsellersworld.com/itemApi/getAllSellingBySeller?MainUser=6656232&SellerID=' + sellerId + '&SellerUserIdent=' + sellerUserIdent + '&SupplierID=' + supplierId
                     console.log("URL :" + url)
                     axios.get(url)
                         .then(res => {
@@ -179,13 +190,101 @@ class Container extends React.Component {
                     sellerId = null;
                 }
                     , 2000);
-                    
+
             }
-        }else if (filters.Supplier !== undefined) {
-                if (supplierId === null) {
-                    supplierId = filters.Supplier.filterVal
-                    this.fetchDataFromSupplierId(supplierId);
-                    
+        } else if (filters.Supplier !== undefined) {
+            if (supplierId === null) {
+                supplierId = filters.Supplier.filterVal
+                this.fetchDataFromSupplierId(supplierId);
+
+                this.setState({
+                    columns: [{
+                        dataField: 'Supplier',
+                        text: 'Supplier',
+                        filter: selectFilter({
+                            options: selectOptions,
+                            defaultValue: 6656241
+                        })
+                    }, {
+                        dataField: 'Seller',
+                        text: 'Seller',
+                        filter: selectFilter({
+                            options: sellerOptions,
+                            defaultValue: 545
+                        })
+                    }, {
+                        dataField: 'sswItemNumber',
+                        text: 'SSW Item Number',
+                    }, {
+                        dataField: 'SKU',
+                        text: 'SKU',
+                    }, {
+                        dataField: 'itemName',
+                        text: 'Item Name',
+                    }, {
+                        dataField: 'purchasePrice',
+                        text: 'Purchase Price',
+                    }, {
+                        dataField: 'purchaseShipCost',
+                        text: 'Purchase Ship Cost',
+                    }, {
+                        dataField: 'availability',
+                        text: 'Availability',
+                    }, {
+                        dataField: 'EAN',
+                        text: 'EAN',
+                    }, {
+                        dataField: 'minPrice',
+                        text: 'Min Price',
+                    }, {
+                        dataField: 'maxPrice',
+                        text: 'Max Price',
+                    }, {
+                        dataField: 'itemCondition',
+                        text: 'Item Condition',
+                    }, {
+                        dataField: 'showInventory',
+                        text: 'Show Inventory',
+                    }, {
+                        dataField: 'basicNettoPrice',
+                        text: 'Basic Net To Price',
+                    }, {
+                        dataField: 'itemPurchaseRank',
+                        text: 'Item Purchase Rank',
+                    }, {
+                        dataField: 'UserImage',
+                        text: 'User Image',
+                    }]
+                })
+                currentSupplierId = supplierId;
+                supplierId = null;
+            }
+        } else if (filters.Seller !== undefined) {
+            if (sellerId === null) {
+                sellerId = filters.Seller.filterVal;
+
+                let sellerUserIdent = 0;
+
+
+
+                axios.get('https://muapi2.starsellersworld.com/itemApi/getSellers')
+                    .then(res => {
+                        rest = res.data.data;
+
+                        for (let i = 0; i < rest.length; i++) {
+                            if (rest[i].SellerID == sellerId) {
+                                sellerUserIdent = rest[i].SellerUserIdent;
+                            }
+                        }
+
+                    });
+                setTimeout(() => {
+                    let url = 'https://muapi2.starsellersworld.com/itemApi/getAllSellingBySeller?MainUser=6656232&SellerID=' + sellerId + '&SellerUserIdent=' + sellerUserIdent
+                    console.log("URL :" + url)
+
+                    this.fetchDataFromSellerId(url, sellerId)
+
+
                     this.setState({
                         columns: [{
                             dataField: 'Supplier',
@@ -202,137 +301,49 @@ class Container extends React.Component {
                                 defaultValue: 545
                             })
                         }, {
-                            dataField: 'sswItemNumber',
-                            text: 'SSW Item Number',
-                        }, {
                             dataField: 'SKU',
                             text: 'SKU',
-                        }, {
-                            dataField: 'itemName',
-                            text: 'Item Name',
-                        }, {
-                            dataField: 'purchasePrice',
-                            text: 'Purchase Price',
-                        }, {
-                            dataField: 'purchaseShipCost',
-                            text: 'Purchase Ship Cost',
-                        }, {
-                            dataField: 'availability',
-                            text: 'Availability',
-                        }, {
-                            dataField: 'EAN',
-                            text: 'EAN',
-                        }, {
-                            dataField: 'minPrice',
-                            text: 'Min Price',
-                        }, {
-                            dataField: 'maxPrice',
-                            text: 'Max Price',
                         }, {
                             dataField: 'itemCondition',
                             text: 'Item Condition',
                         }, {
+                            dataField: 'EAN',
+                            text: 'EAN',
+                        }, {
+                            dataField: 'purchasePrice',
+                            text: 'Purchase Price',
+                        }, {
+                            dataField: 'basisPurchaseCalcPrice',
+                            text: 'Basis Purchase Calc Price',
+                        }, {
+                            dataField: 'realInventory',
+                            text: 'Real Inventory',
+                        }, {
+                            dataField: 'sellingPrice',
+                            text: 'Selling Price',
+                        }, {
+                            dataField: 'sellingPriceNoShip',
+                            text: 'Selling PriceNo Ship',
+                        }, {
+                            dataField: 'netShipCost',
+                            text: 'Net Ship Cost',
+                        }, {
                             dataField: 'showInventory',
                             text: 'Show Inventory',
-                        }, {
-                            dataField: 'basicNettoPrice',
-                            text: 'Basic Net To Price',
-                        }, {
-                            dataField: 'itemPurchaseRank',
-                            text: 'Item Purchase Rank',
                         }, {
                             dataField: 'UserImage',
                             text: 'User Image',
                         }]
-                    })
-                    currentSupplierId = supplierId;
-                    supplierId = null;
+                    });
+                    sellerId = null;
                 }
-            }else if (filters.Seller !== undefined) {
-                if (sellerId === null) {
-                    sellerId = filters.Seller.filterVal;
-
-                    let sellerUserIdent = 0;
+                    , 2000);
 
 
-
-                    axios.get('https://muapi2.starsellersworld.com/itemApi/getSellers')
-                        .then(res => {
-                            rest = res.data.data;
-
-                            for (let i = 0; i < rest.length; i++) {
-                                if (rest[i].SellerID == sellerId) {
-                                    sellerUserIdent = rest[i].SellerUserIdent;
-                                }
-                            }
-
-                        });
-                    setTimeout(() => {
-                        let url = 'https://muapi2.starsellersworld.com/itemApi/getAllSellingBySeller?MainUser=6656232&SellerID=' + sellerId + '&SellerUserIdent=' + sellerUserIdent
-                        console.log("URL :"+url)
-                        
-                        this.fetchDataFromSellerId(url,sellerId)
-                            
-                            
-                            this.setState({
-                                columns: [{
-                                    dataField: 'Supplier',
-                                    text: 'Supplier',
-                                    filter: selectFilter({
-                                        options: selectOptions,
-                                        defaultValue: 6656241
-                                    })
-                                }, {
-                                    dataField: 'Seller',
-                                    text: 'Seller',
-                                    filter: selectFilter({
-                                        options: sellerOptions,
-                                        defaultValue: 545
-                                    })
-                                }, {
-                                    dataField: 'SKU',
-                                    text: 'SKU',
-                                }, {
-                                    dataField: 'itemCondition',
-                                    text: 'Item Condition',
-                                }, {
-                                    dataField: 'EAN',
-                                    text: 'EAN',
-                                }, {
-                                    dataField: 'purchasePrice',
-                                    text: 'Purchase Price',
-                                }, {
-                                    dataField: 'basisPurchaseCalcPrice',
-                                    text: 'Basis Purchase Calc Price',
-                                }, {
-                                    dataField: 'realInventory',
-                                    text: 'Real Inventory',
-                                }, {
-                                    dataField: 'sellingPrice',
-                                    text: 'Selling Price',
-                                }, {
-                                    dataField: 'sellingPriceNoShip',
-                                    text: 'Selling PriceNo Ship',
-                                }, {
-                                    dataField: 'netShipCost',
-                                    text: 'Net Ship Cost',
-                                }, {
-                                    dataField: 'showInventory',
-                                    text: 'Show Inventory',
-                                }, {
-                                    dataField: 'UserImage',
-                                    text: 'User Image',
-                                }]
-                            });
-                            sellerId = null;
-                    }
-                        , 2000);
-
-
-                }
             }
+        }
 
-        
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -357,8 +368,9 @@ class Container extends React.Component {
 
 
     render() {
-        let products = {};
-        products = this.state.data
+        
+        
+        totalSize = products.length;
 
         if (this.props.supplierData != null) {
             selectOptions = this.props.supplierData
@@ -368,10 +380,10 @@ class Container extends React.Component {
             sellerOptions = this.props.sellerData
         }
 
-        console.log("SupplierId :"+supplierId);
-        console.log("SellerId :"+sellerId);
+        console.log("SupplierId :" + supplierId);
+        console.log("SellerId :" + sellerId);
 
-        
+
         return (
             <BootstrapTable
                 remote={{ filter: true }}
@@ -380,11 +392,12 @@ class Container extends React.Component {
                 data={products}
                 columns={this.state.columns}
                 filter={filterFactory()}
+                pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
                 onTableChange={this.handleTableChange}
                 striped
                 hover
                 condensed
-                bordered={ false }
+                bordered={false}
             />
         );
     }
