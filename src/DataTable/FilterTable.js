@@ -76,7 +76,112 @@ class Container extends React.Component {
     }
 
     handleTableChange = (type, { filters }) => {
-        if (filters.Supplier !== undefined) {
+
+        if (filters.Supplier !== undefined && filters.Seller !== undefined) {
+            if (supplierId == null & sellerId == null) {
+
+                console.log("Both filter")
+                supplierId = filters.Supplier.filterVal
+                sellerId = filters.Seller.filterVal;
+
+                let sellerUserIdent = 0;
+
+
+
+                axios.get('https://muapi2.starsellersworld.com/itemApi/getSellers')
+                    .then(res => {
+                        rest = res.data.data;
+
+                        for (let i = 0; i < rest.length; i++) {
+                            if (rest[i].SellerID == sellerId) {
+                                sellerUserIdent = rest[i].SellerUserIdent;
+                            }
+                        }
+
+                    });
+                setTimeout(() => {
+                    let url = 'https://muapi2.starsellersworld.com/itemApi/getAllSellingBySeller?MainUser=6656232&SellerID=' + sellerId + '&SellerUserIdent=' + sellerUserIdent+'&SupplierID='+supplierId
+                    console.log("URL :" + url)
+                    axios.get(url)
+                        .then(res => {
+                            rest = res.data.data;
+
+                            for (let i = 0; i < rest.length; i++) {
+                                rest[i]['Seller'] = sellerOptions[sellerId]
+                                rest[i]['Supplier'] = selectOptions[rest[i].stockOwner]
+                            }
+
+                            this.setState({
+                                data: rest
+                            });
+                            sellerId = null;
+
+                        });
+
+
+
+
+                    this.setState({
+                        columns: [{
+                            dataField: 'Supplier',
+                            text: 'Supplier',
+                            filter: selectFilter({
+                                options: selectOptions,
+                                defaultValue: 6656241
+                            })
+                        }, {
+                            dataField: 'Seller',
+                            text: 'Seller',
+                            filter: selectFilter({
+                                options: sellerOptions,
+                                defaultValue: 545
+                            })
+                        }, {
+                            dataField: 'SKU',
+                            text: 'SKU',
+                        }, {
+                            dataField: 'itemCondition',
+                            text: 'Item Condition',
+                        }, {
+                            dataField: 'EAN',
+                            text: 'EAN',
+                        }, {
+                            dataField: 'purchasePrice',
+                            text: 'Purchase Price',
+                        }, {
+                            dataField: 'basisPurchaseCalcPrice',
+                            text: 'Basis Purchase Calc Price',
+                        }, {
+                            dataField: 'realInventory',
+                            text: 'Real Inventory',
+                        }, {
+                            dataField: 'showInventory',
+                            text: 'Show Inventory',
+                        }, {
+                            dataField: 'sellingPrice',
+                            text: 'Selling Price',
+                        }, {
+                            dataField: 'sellingPriceNoShip',
+                            text: 'Selling PriceNo Ship',
+                        }, {
+                            dataField: 'netShipCost',
+                            text: 'Net Ship Cost',
+                        }, {
+                            dataField: 'showInventory',
+                            text: 'Show Inventory',
+                        }, {
+                            dataField: 'UserImage',
+                            text: 'User Image',
+                        }]
+                    });
+
+                    supplierId = null;
+                    sellerId = null;
+                }
+                    , 2000);
+                    
+            }
+        }else if (filters.Supplier !== undefined) {
                 if (supplierId === null) {
                     supplierId = filters.Supplier.filterVal
                     this.fetchDataFromSupplierId(supplierId);
@@ -143,9 +248,7 @@ class Container extends React.Component {
                     currentSupplierId = supplierId;
                     supplierId = null;
                 }
-            }
-
-            if (filters.Seller !== undefined) {
+            }else if (filters.Seller !== undefined) {
                 if (sellerId === null) {
                     sellerId = filters.Seller.filterVal;
 
