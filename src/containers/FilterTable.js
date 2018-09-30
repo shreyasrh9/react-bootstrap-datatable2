@@ -385,22 +385,17 @@ class FilterTable extends Component {
         const expandRow = {
             renderer: (row) => (
 
-                <RowExpand rowData={this.state.data[row.id]} />
+                <RowExpand rowData={products[row.id]} />
             ),
             showExpandColumn: true,
             onExpand: (row, isExpand, rowIndex, e) => {
-                console.log(row.id);
+                console.log(products[row.id]);
             },
             onExpandAll: (isExpandAll, rows, e) => {
                 console.log(isExpandAll);
                 console.log(rows);
                 console.log(e);
             }
-        };
-
-
-        const cellEdit = {
-            mode: 'click',
         };
 
 
