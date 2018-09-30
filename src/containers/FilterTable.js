@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import cellEditFactory from 'react-bootstrap-table2-editor';
-import filterFactory, { textFilter, selectFilter, Comparator } from 'react-bootstrap-table2-filter';
+import filterFactory, { selectFilter } from 'react-bootstrap-table2-filter';
 import './FilterTable.css'
-import { Container, Row, Col } from 'reactstrap';
 import RowExpand from './RowExapnd/RowExpand'
 
 import axios from 'axios'
 
 let supplierId = null;
-let currentSupplierId = null;
 let sellerId = null;
-let currentSellerId = null;
 let selectOptions = {};
 let rest = {}
 let sellerOptions = {};
@@ -24,7 +21,7 @@ let products = {};
 
 
 
-class FilterTable extends React.Component {
+class FilterTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -92,7 +89,7 @@ class FilterTable extends React.Component {
             });
     }
 
-    handleTableChange = (type, { filters, page, sizePerPage}) => {
+    handleTableChange = (type, { filters, page, sizePerPage }) => {
 
         if (filters.Supplier !== undefined && filters.Seller !== undefined) {
             if (supplierId == null & sellerId == null) {
@@ -110,7 +107,7 @@ class FilterTable extends React.Component {
                         rest = res.data.data;
 
                         for (let i = 0; i < rest.length; i++) {
-                            if (rest[i].SellerID == sellerId) {
+                            if (rest[i].SellerID === sellerId) {
                                 sellerUserIdent = rest[i].SellerUserIdent;
                             }
                         }
@@ -262,7 +259,6 @@ class FilterTable extends React.Component {
                         text: 'User Image',
                     }]
                 })
-                currentSupplierId = supplierId;
                 supplierId = null;
             }
         } else if (filters.Seller !== undefined) {
@@ -278,7 +274,7 @@ class FilterTable extends React.Component {
                         rest = res.data.data;
 
                         for (let i = 0; i < rest.length; i++) {
-                            if (rest[i].SellerID == sellerId) {
+                            if (rest[i].SellerID === sellerId) {
                                 sellerUserIdent = rest[i].SellerUserIdent;
                             }
                         }
@@ -388,51 +384,46 @@ class FilterTable extends React.Component {
 
         const expandRow = {
             renderer: (row) => (
-            
-            <RowExpand rowData={this.state.data[row.id]}/>
+
+                <RowExpand rowData={this.state.data[row.id]} />
             ),
             showExpandColumn: true,
             onExpand: (row, isExpand, rowIndex, e) => {
-              console.log(row.id);
+                console.log(row.id);
             },
             onExpandAll: (isExpandAll, rows, e) => {
-              console.log(isExpandAll);
-              console.log(rows);
-              console.log(e);
+                console.log(isExpandAll);
+                console.log(rows);
+                console.log(e);
             }
-          };
-
-        
-        const cellEdit = {
-            mode: 'click',
         };
 
 
         return (
 
             <div className='FilterTable'>
-               
-                    <BootstrapTable
-                        remote={{ filter: true, cellEdit: true  }}
-                        noDataIndication="Please select the distributor or seller"
-                        keyField="id"
-                        data={products}
-                        expandRow={ expandRow }
-                        columns={this.state.columns}
-                        filter={filterFactory()}
-                        pagination={paginationFactory({ page, sizePerPage, totalSize })}
-                        onTableChange={this.handleTableChange}
-                        condensed
-                        bordered={false}
-                        cellEdit={ cellEditFactory({
-                            mode: 'click',
-                            onStartEdit: (row, column, rowIndex, columnIndex) => { console.log('start to edit!!!'); },
-                            beforeSaveCell: (oldValue, newValue, row, column) => { console.log('Before Saving Cell!!'); },
-                            afterSaveCell: (oldValue, newValue, row, column) => { console.log('After Saving Cell!!'); }
-                        })
+
+                <BootstrapTable
+                    remote={{ filter: true, cellEdit: true }}
+                    noDataIndication="Please select the distributor or seller"
+                    keyField="id"
+                    data={products}
+                    expandRow={expandRow}
+                    columns={this.state.columns}
+                    filter={filterFactory()}
+                    pagination={paginationFactory({ page, sizePerPage, totalSize })}
+                    onTableChange={this.handleTableChange}
+                    condensed
+                    bordered={false}
+                    cellEdit={cellEditFactory({
+                        mode: 'click',
+                        onStartEdit: (row, column, rowIndex, columnIndex) => { console.log('start to edit!!!'); },
+                        beforeSaveCell: (oldValue, newValue, row, column) => { console.log('Before Saving Cell!!'); },
+                        afterSaveCell: (oldValue, newValue, row, column) => { console.log('After Saving Cell!!'); }
+                    })
                     }
-                    />
-               
+                />
+
             </div>
 
         );

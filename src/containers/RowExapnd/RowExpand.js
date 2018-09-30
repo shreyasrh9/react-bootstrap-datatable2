@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, Input, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Button, Input, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import { Table } from 'reactstrap';
 import './RowExpand.css'
@@ -499,13 +499,13 @@ class RowExpand extends Component {
                                         <tr>
                                             <td>
                                                 <span style={{ float: "left" }}>
-                                                    <img className='FlagLogo' src={require("../../assets/images/united-kingdom.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/united-kingdom.png")} alt=""></img>
                                                     <span style={{ marginLeft: "5px" }}></span>
-                                                    <img className='FlagLogo' src={require("../../assets/images/ivory-coast.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/ivory-coast.png")} alt=""></img>
                                                     <span style={{ marginLeft: "5px" }}></span>
-                                                    <img className='FlagLogo' src={require("../../assets/images/france.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/france.png")} alt=""></img>
                                                     <span style={{ marginLeft: "5px" }}></span>
-                                                    <img className='FlagLogo' src={require("../../assets/images/equatorial-guinea.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/equatorial-guinea.png")} alt=""></img>
                                                 </span>
 
 
@@ -523,7 +523,7 @@ class RowExpand extends Component {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img className="ProductImage" src={require("../../assets/images/shoes.png")} ></img>
+                                                <img className="ProductImage" src={require("../../assets/images/shoes.png")} alt=""></img>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -1093,13 +1093,13 @@ class RowExpand extends Component {
                                         <tr>
                                             <td>
                                                 <span style={{ float: "left" }}>
-                                                    <img className='FlagLogo' src={require("../../assets/images/united-kingdom.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/united-kingdom.png")} alt=""></img>
                                                     <span style={{ marginLeft: "5px" }}></span>
-                                                    <img className='FlagLogo' src={require("../../assets/images/ivory-coast.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/ivory-coast.png")} alt=""></img>
                                                     <span style={{ marginLeft: "5px" }}></span>
-                                                    <img className='FlagLogo' src={require("../../assets/images/france.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/france.png")} alt=""></img>
                                                     <span style={{ marginLeft: "5px" }}></span>
-                                                    <img className='FlagLogo' src={require("../../assets/images/equatorial-guinea.png")} ></img>
+                                                    <img className='FlagLogo' src={require("../../assets/images/equatorial-guinea.png")} alt=""></img>
                                                 </span>
 
 
@@ -1117,7 +1117,7 @@ class RowExpand extends Component {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img className="ProductImage" src={require("../../assets/images/shoes.png")} ></img>
+                                                <img className="ProductImage" src={require("../../assets/images/shoes.png")} alt=""></img>
                                             </td>
                                         </tr>
                                     </tbody>

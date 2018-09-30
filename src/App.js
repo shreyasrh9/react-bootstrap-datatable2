@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import BootstrapTable from 'react-bootstrap-table-next';
 import axios from 'axios'
-
-
-import DataTable from './DataTable/DataTable'
-import FilterTable from './DataTable/FilterTable'
+import FilterTable from './containers/FilterTable'
 
 let supplierNameFilter = {};
 let sellerNameFilter = {};
