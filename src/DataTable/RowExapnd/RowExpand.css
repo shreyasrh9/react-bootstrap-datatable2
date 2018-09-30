@@ -1,5 +1,5 @@
 .TableData{
-    border: 1px solid lightgray;
+    border: 1px solid lightblue;
 }
 
 .RowExpand{
@@ -8,7 +8,7 @@
 }
 
 .TableDataHeader{
-    background-color: lightgray
+    background-color: lightblue
 }
 
 .FlagLogo{
