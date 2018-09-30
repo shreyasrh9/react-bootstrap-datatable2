@@ -424,7 +424,13 @@ class FilterTable extends React.Component {
                         onTableChange={this.handleTableChange}
                         condensed
                         bordered={false}
-                        cellEdit={ cellEditFactory(cellEdit) }
+                        cellEdit={ cellEditFactory({
+                            mode: 'click',
+                            onStartEdit: (row, column, rowIndex, columnIndex) => { console.log('start to edit!!!'); },
+                            beforeSaveCell: (oldValue, newValue, row, column) => { console.log('Before Saving Cell!!'); },
+                            afterSaveCell: (oldValue, newValue, row, column) => { console.log('After Saving Cell!!'); }
+                        })
+                    }
                     />
                
             </Container>
