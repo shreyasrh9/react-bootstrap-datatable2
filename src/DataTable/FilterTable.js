@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
+import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory, { textFilter, selectFilter, Comparator } from 'react-bootstrap-table2-filter';
 import './FilterTable.css'
 import { Container, Row, Col } from 'reactstrap';
@@ -91,7 +92,7 @@ class FilterTable extends React.Component {
             });
     }
 
-    handleTableChange = (type, { filters, page, sizePerPage }) => {
+    handleTableChange = (type, { filters, page, sizePerPage}) => {
 
         if (filters.Supplier !== undefined && filters.Seller !== undefined) {
             if (supplierId == null & sellerId == null) {
@@ -401,13 +402,18 @@ class FilterTable extends React.Component {
             }
           };
 
+        
+        const cellEdit = {
+            mode: 'click',
+        };
+
 
         return (
 
             <Container className='FilterTable'>
                
                     <BootstrapTable
-                        remote={{ filter: true }}
+                        remote={{ filter: true, cellEdit: true  }}
                         noDataIndication="Please select the distributor or seller"
                         keyField="id"
                         data={products}
@@ -418,6 +424,7 @@ class FilterTable extends React.Component {
                         onTableChange={this.handleTableChange}
                         condensed
                         bordered={false}
+                        cellEdit={ cellEditFactory(cellEdit) }
                     />
                
             </Container>
