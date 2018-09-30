@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Button, Input, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, Button, Input, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import { Table } from 'reactstrap';
 import './RowExpand.css'
+import SearchNavLinks from '../../components/RowExpandNavigation/RowExpandNavigation'
+import ExpandTableHeader from '../../components/ExpandTable/ExpandTableHeader/ExpandTableHeader'
+import ExpandTableBody from '../../components/ExpandTable/ExpandTableBody/ExpandTableBody'
+import ExpandTableBodyEdit from '../../components/ExpandTable/ExpandTableBody/ExpandTableBodyEdit'
 
 
 class RowExpand extends Component {
@@ -26,475 +30,81 @@ class RowExpand extends Component {
         return (
             <div className="RowExpand">
                 <Nav tabs>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '1' })}
-                            onClick={() => { this.toggle('1'); }}
-                        >
-                            View
-            </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: this.state.activeTab === '2' })}
-                            onClick={() => { this.toggle('2'); }}
-                        >
-                            Edit
-            </NavLink>
-                    </NavItem>
+                    <SearchNavLinks activeTab={this.state.activeTab} tabValue='1' clicked={this.toggle}>
+                        View
+                    </SearchNavLinks>
+
+                    <SearchNavLinks activeTab={this.state.activeTab} tabValue='2' clicked={this.toggle}>
+                        Edit
+                    </SearchNavLinks>
                 </Nav>
+
+
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="1">
                         <Row>
                             <Col>
                                 <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Master Data :</th>
-                                        </tr>
-                                    </thead>
+                                    <ExpandTableHeader header="Master Data" />
+
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Supplier
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.Supplier}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Seller
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.Seller}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    SKU
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.SKU}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Item Condition
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.itemCondition}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    EAN
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.EAN}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Purchase Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.purchasePrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Basis Purchase Calc Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.basisPurchaseCalcPrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Real Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.realInventory}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Show Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.showInventory}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.sellingPrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price No Ship
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.sellingPriceNoShip}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Net Ship Cost
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.netShipCost}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </Table>
-                            </Col>
-                            <Col><Table className="TableData">
-                                <thead className="TableDataHeader">
-                                    <tr>
-                                        <th>Price and Stock :</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Supplier
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.Supplier}
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Seller
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.Seller}
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                SKU
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.SKU}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Item Condition
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.itemCondition}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                EAN
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.EAN}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Purchase Price
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.purchasePrice}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Basis Purchase Calc Price
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.basisPurchaseCalcPrice}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Real Inventory
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.realInventory}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Show Inventory
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.showInventory}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Selling Price
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.sellingPrice}
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Selling Price No Ship
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.sellingPriceNoShip}
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <span style={{ float: "left" }}>
-                                                Net Ship Cost
-                                                </span>
-
-                                            <span style={{ float: "right" }}>
-                                                {this.props.rowData.netShipCost}
-                                            </span>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                            </Table></Col>
-                            <Col>
-                                <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Additional  product information:</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Supplier
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.Supplier}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Seller
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.Seller}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    SKU
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.SKU}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Item Condition
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.itemCondition}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    EAN
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.EAN}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Purchase Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.purchasePrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Basis Purchase Calc Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.basisPurchaseCalcPrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Real Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.realInventory}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Show Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.showInventory}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.sellingPrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price No Ship
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.sellingPriceNoShip}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Net Ship Cost
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.netShipCost}
-                                                </span>
-                                            </td>
-                                        </tr>
-
+                                        <ExpandTableBody head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBody head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBody head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBody head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBody head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBody head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBody head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBody head="Real Inventory" rowData={this.props.rowData.realInventory} />
+                                        <ExpandTableBody head="Show Inventory" rowData={this.props.rowData.showInventory} />
+                                        <ExpandTableBody head="Selling Price" rowData={this.props.rowData.sellingPrice} />
+                                        <ExpandTableBody head="Selling Price No Ship" rowData={this.props.rowData.sellingPriceNoShip} />
+                                        <ExpandTableBody head="Net Ship Cost" rowData={this.props.rowData.netShipCost} />
                                     </tbody>
                                 </Table>
                             </Col>
                             <Col>
                                 <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Marketplace:</th>
-                                        </tr>
-                                    </thead>
+                                    <ExpandTableHeader header="Price and stock" />
+
+                                    <tbody>
+                                        <ExpandTableBody head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBody head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBody head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBody head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBody head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBody head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBody head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBody head="Real Inventory" rowData={this.props.rowData.realInventory} />
+                                        <ExpandTableBody head="Show Inventory" rowData={this.props.rowData.showInventory} />
+                                        <ExpandTableBody head="Selling Price" rowData={this.props.rowData.sellingPrice} />
+                                        <ExpandTableBody head="Selling Price No Ship" rowData={this.props.rowData.sellingPriceNoShip} />
+                                        <ExpandTableBody head="Net Ship Cost" rowData={this.props.rowData.netShipCost} />
+                                    </tbody>
+                                </Table>
+                            </Col>
+                            <Col>
+                                <Table className="TableData">
+                                    <ExpandTableHeader header="Additional product information" />
+                                    <tbody>
+                                        <ExpandTableBody head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBody head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBody head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBody head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBody head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBody head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBody head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBody head="Real Inventory" rowData={this.props.rowData.realInventory} />
+                                        <ExpandTableBody head="Show Inventory" rowData={this.props.rowData.showInventory} />
+                                        <ExpandTableBody head="Selling Price" rowData={this.props.rowData.sellingPrice} />
+                                        <ExpandTableBody head="Selling Price No Ship" rowData={this.props.rowData.sellingPriceNoShip} />
+                                        <ExpandTableBody head="Net Ship Cost" rowData={this.props.rowData.netShipCost} />
+                                    </tbody>
+                                </Table>
+                            </Col>
+                            <Col>
+                                <Table className="TableData">
+                                    <ExpandTableHeader header="Marketplace" />
                                     <tbody>
                                         <tr>
                                             <td>
@@ -530,102 +140,17 @@ class RowExpand extends Component {
                                 </Table>
 
                                 <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Product feature:</th>
-                                        </tr>
-                                    </thead>
+
+                                    <ExpandTableHeader header="Product feature" />
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Supplier
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.Supplier}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Seller
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.Seller}
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    SKU
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.SKU}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Item Condition
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.itemCondition}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    EAN
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.EAN}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Purchase Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.purchasePrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Basis Purchase Calc Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.basisPurchaseCalcPrice}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Real Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    {this.props.rowData.realInventory}
-                                                </span>
-                                            </td>
-                                        </tr>
+                                        <ExpandTableBody head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBody head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBody head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBody head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBody head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBody head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBody head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBody head="Real Inventory" rowData={this.props.rowData.realInventory} />
                                     </tbody>
                                 </Table>
 
@@ -636,448 +161,59 @@ class RowExpand extends Component {
                         <Row>
                             <Col>
                                 <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Master Data :</th>
-                                        </tr>
-                                    </thead>
+                                    <ExpandTableHeader header="Master Data" />
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Supplier
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Supplier} />
-
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Seller
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Seller} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    SKU
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.SKU} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Item Condition
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.itemCondition} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    EAN
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.EAN} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Purchase Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.purchasePrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Basis Purchase
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.basisPurchaseCalcPrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Real Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.realInventory} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Show Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.showInventory} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.sellingPrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.sellingPriceNoShip} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Net Ship Cost
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.netShipCost} />
-                                                </span>
-                                            </td>
-                                        </tr>
+                                        <ExpandTableBodyEdit head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBodyEdit head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBodyEdit head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBodyEdit head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBodyEdit head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBodyEdit head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBodyEdit head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBodyEdit head="Real Inventory" rowData={this.props.rowData.realInventory} />
+                                        <ExpandTableBodyEdit head="Show Inventory" rowData={this.props.rowData.showInventory} />
+                                        <ExpandTableBodyEdit head="Selling Price" rowData={this.props.rowData.sellingPrice} />
+                                        <ExpandTableBodyEdit head="Selling Price No Ship" rowData={this.props.rowData.sellingPriceNoShip} />
+                                        <ExpandTableBodyEdit head="Net Ship Cost" rowData={this.props.rowData.netShipCost} />
 
                                     </tbody>
                                 </Table>
                             </Col>
                             <Col>
                                 <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Price and Stock :</th>
-                                        </tr>
-                                    </thead>
+                                    <ExpandTableHeader header="Price and stock" />
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Supplier
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Supplier} />
-
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Seller
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Seller} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    SKU
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.SKU} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Item Condition
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.itemCondition} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    EAN
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.EAN} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Purchase Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.purchasePrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Basis Purchase
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.basisPurchaseCalcPrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Real Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.realInventory} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Show Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.showInventory} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.sellingPrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.sellingPriceNoShip} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Net Ship Cost
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.netShipCost} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
+                                        <ExpandTableBodyEdit head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBodyEdit head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBodyEdit head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBodyEdit head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBodyEdit head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBodyEdit head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBodyEdit head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBodyEdit head="Real Inventory" rowData={this.props.rowData.realInventory} />
+                                        <ExpandTableBodyEdit head="Show Inventory" rowData={this.props.rowData.showInventory} />
+                                        <ExpandTableBodyEdit head="Selling Price" rowData={this.props.rowData.sellingPrice} />
+                                        <ExpandTableBodyEdit head="Selling Price No Ship" rowData={this.props.rowData.sellingPriceNoShip} />
+                                        <ExpandTableBodyEdit head="Net Ship Cost" rowData={this.props.rowData.netShipCost} />
                                     </tbody>
                                 </Table>
                             </Col>
                             <Col>
                                 <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Additional product information :</th>
-                                        </tr>
-                                    </thead>
+                                    <ExpandTableHeader header="Additional product information" />
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Supplier
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Supplier} />
-
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Seller
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Seller} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    SKU
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.SKU} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Item Condition
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.itemCondition} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    EAN
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.EAN} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Purchase Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.purchasePrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Basis Purchase
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.basisPurchaseCalcPrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Real Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.realInventory} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Show Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.showInventory} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.sellingPrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Selling Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.sellingPriceNoShip} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Net Ship Cost
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.netShipCost} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
+                                        <ExpandTableBodyEdit head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBodyEdit head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBodyEdit head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBodyEdit head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBodyEdit head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBodyEdit head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBodyEdit head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBodyEdit head="Real Inventory" rowData={this.props.rowData.realInventory} />
+                                        <ExpandTableBodyEdit head="Show Inventory" rowData={this.props.rowData.showInventory} />
+                                        <ExpandTableBodyEdit head="Selling Price" rowData={this.props.rowData.sellingPrice} />
+                                        <ExpandTableBodyEdit head="Selling Price No Ship" rowData={this.props.rowData.sellingPriceNoShip} />
+                                        <ExpandTableBodyEdit head="Net Ship Cost" rowData={this.props.rowData.netShipCost} />
                                     </tbody>
                                 </Table>
                             </Col>
@@ -1124,103 +260,16 @@ class RowExpand extends Component {
                                 </Table>
 
                                 <Table className="TableData">
-                                    <thead className="TableDataHeader">
-                                        <tr>
-                                            <th>Product feature:</th>
-                                        </tr>
-                                    </thead>
+                                    <ExpandTableHeader header="Product feature" />
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Supplier
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Supplier} />
-
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Seller
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.Seller} />
-                                                </span>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    SKU
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.SKU} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Item Condition
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.itemCondition} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    EAN
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.EAN} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Purchase Price
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.purchasePrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Basis Purchase
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.basisPurchaseCalcPrice} />
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <span style={{ float: "left" }}>
-                                                    Real Inventory
-                                                </span>
-
-                                                <span style={{ float: "right" }}>
-                                                    <Input value={this.props.rowData.realInventory} />
-                                                </span>
-                                            </td>
-                                        </tr>
+                                        <ExpandTableBodyEdit head="Supplier" rowData={this.props.rowData.Supplier} />
+                                        <ExpandTableBodyEdit head="Seller" rowData={this.props.rowData.Seller} />
+                                        <ExpandTableBodyEdit head="SKU" rowData={this.props.rowData.SKU} />
+                                        <ExpandTableBodyEdit head="Item Condition" rowData={this.props.rowData.itemCondition} />
+                                        <ExpandTableBodyEdit head="EAN" rowData={this.props.rowData.EAN} />
+                                        <ExpandTableBodyEdit head="Purchase Price" rowData={this.props.rowData.purchasePrice} />
+                                        <ExpandTableBodyEdit head="Basis Purchase Calc Price" rowData={this.props.rowData.basisPurchaseCalcPrice} />
+                                        <ExpandTableBodyEdit head="Real Inventory" rowData={this.props.rowData.realInventory} />
                                     </tbody>
                                 </Table>
 

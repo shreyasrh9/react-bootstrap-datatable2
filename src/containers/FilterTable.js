@@ -107,7 +107,7 @@ class FilterTable extends Component {
                         rest = res.data.data;
 
                         for (let i = 0; i < rest.length; i++) {
-                            if (rest[i].SellerID === sellerId) {
+                            if (rest[i].SellerID == sellerId) {
                                 sellerUserIdent = rest[i].SellerUserIdent;
                             }
                         }
@@ -274,7 +274,7 @@ class FilterTable extends Component {
                         rest = res.data.data;
 
                         for (let i = 0; i < rest.length; i++) {
-                            if (rest[i].SellerID === sellerId) {
+                            if (rest[i].SellerID == sellerId) {
                                 sellerUserIdent = rest[i].SellerUserIdent;
                             }
                         }
@@ -396,6 +396,11 @@ class FilterTable extends Component {
                 console.log(rows);
                 console.log(e);
             }
+        };
+
+
+        const cellEdit = {
+            mode: 'click',
         };
 
 

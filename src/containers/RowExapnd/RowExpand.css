@@ -3,13 +3,11 @@
 }
 
 .RowExpand{
-    font-size: 13px;
+    font-size: 12px;
     color: dimgray;
 }
 
-.TableDataHeader{
-    background-color: lightblue
-}
+
 
 .FlagLogo{
     height: 20px;
