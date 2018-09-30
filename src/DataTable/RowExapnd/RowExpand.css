@@ -1,0 +1,16 @@
+.TableData{
+    border: 1px solid lightgray;
+}
+
+.RowExpand{
+    font-size: 13px;
+    color: dimgray;
+}
+
+.TableDataHeader{
+    background-color: lightgray
+}
+
+.FlagLogo{
+    height: 20px;
+}

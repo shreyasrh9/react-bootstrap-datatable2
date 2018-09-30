@@ -3,6 +3,8 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter, selectFilter, Comparator } from 'react-bootstrap-table2-filter';
 import './FilterTable.css'
+import { Container, Row, Col } from 'reactstrap';
+import RowExpand from './RowExapnd/RowExpand'
 
 import axios from 'axios'
 
@@ -21,7 +23,7 @@ let products = {};
 
 
 
-class Container extends React.Component {
+class FilterTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,6 +55,7 @@ class Container extends React.Component {
 
                 for (let i = 0; i < rest.length; i++) {
                     rest[i]['Supplier'] = selectOptions[supplierId]
+                    rest[i]['id'] = i
                 }
 
                 products = rest;
@@ -73,6 +76,7 @@ class Container extends React.Component {
                 for (let i = 0; i < rest.length; i++) {
                     rest[i]['Seller'] = sellerOptions[sellId]
                     rest[i]['Supplier'] = selectOptions[rest[i].stockOwner]
+                    rest[i]['id'] = i
                 }
 
                 products = rest;
@@ -369,8 +373,8 @@ class Container extends React.Component {
 
 
     render() {
-        
-        
+
+
         totalSize = products.length;
 
         if (this.props.supplierData != null) {
@@ -381,31 +385,47 @@ class Container extends React.Component {
             sellerOptions = this.props.sellerData
         }
 
-        console.log("SupplierId :" + supplierId);
-        console.log("SellerId :" + sellerId);
+        const expandRow = {
+            renderer: (row) => (
+            
+            <RowExpand rowData={this.state.data[row.id]}/>
+            ),
+            showExpandColumn: true,
+            onExpand: (row, isExpand, rowIndex, e) => {
+              console.log(row.id);
+            },
+            onExpandAll: (isExpandAll, rows, e) => {
+              console.log(isExpandAll);
+              console.log(rows);
+              console.log(e);
+            }
+          };
 
 
         return (
-            <div className = 'FilterTable'>
-            <BootstrapTable
-                remote={{ filter: true }}
-                noDataIndication="Please select the distributor or seller"
-                keyField="id"
-                data={products}
-                columns={this.state.columns}
-                filter={filterFactory()}
-                pagination={ paginationFactory({ page, sizePerPage, totalSize }) }
-                onTableChange={this.handleTableChange}
-                striped
-                hover
-                condensed
-                bordered={false}
-            />
-            </div>
+
+            <Container className='FilterTable'>
+               
+                    <BootstrapTable
+                        remote={{ filter: true }}
+                        noDataIndication="Please select the distributor or seller"
+                        keyField="id"
+                        data={products}
+                        expandRow={ expandRow }
+                        columns={this.state.columns}
+                        filter={filterFactory()}
+                        pagination={paginationFactory({ page, sizePerPage, totalSize })}
+                        onTableChange={this.handleTableChange}
+                        condensed
+                        bordered={false}
+                    />
+               
+            </Container>
+
         );
     }
 }
 
 
 
-export default Container;
+export default FilterTable;
