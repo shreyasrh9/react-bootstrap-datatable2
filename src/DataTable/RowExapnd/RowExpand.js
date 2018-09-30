@@ -523,7 +523,7 @@ class RowExpand extends Component {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img src={require("../../assets/images/shoes.png")} ></img>
+                                                <img className="ProductImage" src={require("../../assets/images/shoes.png")} ></img>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -1117,7 +1117,7 @@ class RowExpand extends Component {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img src={require("../../assets/images/shoes.png")} ></img>
+                                                <img className="ProductImage" src={require("../../assets/images/shoes.png")} ></img>
                                             </td>
                                         </tr>
                                     </tbody>

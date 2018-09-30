@@ -1,5 +1,9 @@
 .FilterTable{
     font-family: "Open Sans", sans-serif;
-    font-size: 14px;
+    font-size: 12px !important;
     margin-top: 3%;
+}
+
+.form-control{
+    font-size: 12px !important;
 }

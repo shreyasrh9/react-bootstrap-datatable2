@@ -410,7 +410,7 @@ class FilterTable extends React.Component {
 
         return (
 
-            <Container className='FilterTable'>
+            <div className='FilterTable'>
                
                     <BootstrapTable
                         remote={{ filter: true, cellEdit: true  }}
@@ -433,7 +433,7 @@ class FilterTable extends React.Component {
                     }
                     />
                
-            </Container>
+            </div>
 
         );
     }
