@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, Input, CardText, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
 import { Table } from 'reactstrap';
 import './RowExpand.css'
@@ -634,7 +634,453 @@ class RowExpand extends Component {
                     </TabPane>
                     <TabPane tabId="2">
                         <Row>
-                            Write here
+                            <Col>
+                                <Table className="TableData">
+                                    <thead className="TableDataHeader">
+                                        <tr>
+                                            <th>Master Data :</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Supplier
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.Supplier} />
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Seller
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.Seller} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    SKU
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.SKU} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Item Condition
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.itemCondition} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    EAN
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.EAN} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Purchase Price
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.purchasePrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Basis Purchase 
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.basisPurchaseCalcPrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Real Inventory
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.realInventory} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Show Inventory
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.showInventory} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Selling Price
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.sellingPrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Selling Price 
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.sellingPriceNoShip} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Net Ship Cost
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.netShipCost} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </Table>
+                            </Col>
+                            <Col>
+                                <Table className="TableData">
+                                    <thead className="TableDataHeader">
+                                        <tr>
+                                            <th>Price and Stock :</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Supplier
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.Supplier} />
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Seller
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.Seller} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    SKU
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.SKU} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Item Condition
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.itemCondition} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    EAN
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.EAN} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Purchase Price
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.purchasePrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Basis Purchase 
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.basisPurchaseCalcPrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Real Inventory
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.realInventory} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Show Inventory
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.showInventory} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Selling Price
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.sellingPrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Selling Price 
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.sellingPriceNoShip} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Net Ship Cost
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.netShipCost} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </Table>
+                            </Col>
+                            <Col>
+                                <Table className="TableData">
+                                    <thead className="TableDataHeader">
+                                        <tr>
+                                            <th>Additional product information :</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Supplier
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.Supplier} />
+
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Seller
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.Seller} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    SKU
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.SKU} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Item Condition
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.itemCondition} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    EAN
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.EAN} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Purchase Price
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.purchasePrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Basis Purchase
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.basisPurchaseCalcPrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Real Inventory
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.realInventory} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Show Inventory
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.showInventory} />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Selling Price
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.sellingPrice} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Selling Price
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.sellingPriceNoShip} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <span style={{ float: "left" }}>
+                                                    Net Ship Cost
+                                                </span>
+
+                                                <span style={{ float: "right" }}>
+                                                    <Input value={this.props.rowData.netShipCost} />
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </Table>
+                            </Col>
                         </Row>
                     </TabPane>
                 </TabContent>
